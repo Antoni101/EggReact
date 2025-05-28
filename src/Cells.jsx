@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-export default function Cell({ setMoney, setEggs }) {
+export default function Cell({ setEggs }) {
   const [active, setActive] = useState(false);
   const [fill, setFill] = useState(0);
 
@@ -25,8 +25,6 @@ export default function Cell({ setMoney, setEggs }) {
       cellInterval.current = null;
       setActive(false);
       setFill(0);
-
-      setMoney(prev => prev + value);
     }
   }, [fill]);
 
@@ -34,7 +32,8 @@ export default function Cell({ setMoney, setEggs }) {
     <div
       onClick={start}
       style={{
-        background: `linear-gradient(to top, green ${fill}%, white ${fill}%)`,
+        position: 'relative',
+        overflow: 'hidden'
       }}
       className="
         bg-white border border-2
@@ -42,6 +41,19 @@ export default function Cell({ setMoney, setEggs }) {
         active:transform active:scale-105
         hover:opacity-100 hover:cursor-pointer
         transition duration-150"
-    ></div>
+    >
+      <div 
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundColor: 'green',
+          transform: `translateY(${100 - fill}%)`,
+          transition: 'transform 0.3s ease-in-out'
+        }}
+      />
+    </div>
   );
 }

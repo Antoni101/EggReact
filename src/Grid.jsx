@@ -1,11 +1,14 @@
 import Cell from './Cells.jsx'
 
-export default function Grid({ setMoney, setEggs }) {
+export default function Grid({ setMoney, setEggs, level }) {
+    const gridSize = Math.min(level, 10); // max 10x10
+    const numCells = gridSize * gridSize;
+
     return (
-        <div className="bg-gray-300 relative w-200 h-200">
-          <div className='grid grid-cols-10 gap-0'>
-            {[...Array(100)].map((_, i) => (
-                <Cell key={i} setMoney={setMoney} setEggs={setEggs}/>
+        <div className="flex items-center justify-center">
+          <div style={{ display: 'grid', gridTemplateColumns: `repeat(${gridSize}, 1fr)` }}>
+            {[...Array(numCells)].map((_, i) => (
+                <Cell key={i} setEggs={setEggs}/>
             ))}
           </div>
         </div>
