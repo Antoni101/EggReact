@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-export default function Cell({ setEggs }) {
+export default function Cell({ setEggs, eggs }) {
   const [active, setActive] = useState(false);
   const [fill, setFill] = useState(0);
 
@@ -11,13 +11,22 @@ export default function Cell({ setEggs }) {
   const cellInterval = useRef(null);
 
   const start = () => {
-    if (!active) {
-      setActive(true);
-      cellInterval.current = setInterval(() => {
-        setFill(prev => prev + rate);
-      }, speed);
-    }
+  const selected = eggs.find(e => e.selected && e.amount > 0);
+  if (!selected || active) return;
+    setEggs(prev =>
+      prev.map(egg =>
+        egg.id === selected.id
+          ? { ...egg, amount: egg.amount - 1 }
+          : egg
+      )
+    );
+
+    setActive(true);
+    cellInterval.current = setInterval(() => {
+      setFill(prev => prev + rate);
+    }, speed);
   };
+
 
   useEffect(() => {
     if (fill >= 100) {
@@ -25,8 +34,14 @@ export default function Cell({ setEggs }) {
       cellInterval.current = null;
       setActive(false);
       setFill(0);
+      hatch();
     }
   }, [fill]);
+
+  const hatch = () => {
+    console.log("HATCHED!");
+    // Gonna add more logic here later
+  };
 
   return (
     <div
@@ -49,7 +64,7 @@ export default function Cell({ setEggs }) {
           left: 0,
           width: '100%',
           height: '100%',
-          backgroundColor: 'green',
+          backgroundColor: 'lightgreen',
           transform: `translateY(${100 - fill}%)`,
           transition: 'transform 0.3s ease-in-out'
         }}
