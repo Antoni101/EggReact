@@ -4,27 +4,24 @@ export default function Cell({ setEggs, eggs }) {
   const [active, setActive] = useState(false);
   const [fill, setFill] = useState(0);
 
-  const value = 10;
-  const rate = 5;
-  const speed = 500;
-
+  const speed = 500
   const cellInterval = useRef(null);
 
   const start = () => {
-  const selected = eggs.find(e => e.selected && e.amount > 0);
-  if (!selected || active) return;
-    setEggs(prev =>
-      prev.map(egg =>
-        egg.id === selected.id
-          ? { ...egg, amount: egg.amount - 1 }
-          : egg
-      )
-    );
+    const selected = eggs.find(e => e.selected && e.amount > 0);
+    if (!selected || active) return;
+      setEggs(prev =>
+        prev.map(egg =>
+          egg.id === selected.id
+            ? { ...egg, amount: egg.amount - 1 }
+            : egg
+        )
+      );
 
-    setActive(true);
-    cellInterval.current = setInterval(() => {
-      setFill(prev => prev + rate);
-    }, speed);
+      setActive(true);
+      cellInterval.current = setInterval(() => {
+        setFill(prev => prev + selected.rate);
+      }, speed);
   };
 
 
