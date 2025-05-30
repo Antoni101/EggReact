@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-export default function Cell({ setEggs, eggs }) {
+export default function Cell({ setEggs, eggs, inventory, setInventory }) {
   const [active, setActive] = useState(false);
   const [fill, setFill] = useState(0);
 
@@ -36,9 +36,9 @@ export default function Cell({ setEggs, eggs }) {
   }, [fill]);
 
   const hatch = () => {
-    console.log("HATCHED!");
-    // Gonna add more logic here later
+    
   };
+
 
   return (
     <div

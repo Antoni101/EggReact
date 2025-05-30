@@ -7,6 +7,7 @@ import Data from './Data.jsx'
 function App() {
   const [money, setMoney] = useState(0);
   const [level, setLevel] = useState(1);
+  const [inventory, setInventory] = useState([]);
 
   const [eggs, setEggs] = useState([
     { id: 1, name: "F Tier Egg", rate: 10, amount: 0, selected: false },
@@ -20,8 +21,7 @@ function App() {
   return (
     <div className='relative w-screen h-screen flex items-center justify-center'>
       <Data money={money} level={level} eggs={eggs} setEggs={setEggs} />
-
-      <Grid setMoney={setMoney} setEggs={setEggs} level={level} eggs={eggs} />
+      <Grid inventory={inventory} setInventory={setInventory} setMoney={setMoney} setEggs={setEggs} level={level} eggs={eggs} />
     </div>
   );
 }
